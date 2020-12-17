@@ -316,7 +316,6 @@ def get_d_LB(l,u,func,dfunc):
         if keep_search.sum() == 0:
             break
         t = t[idx>0]
-        print(t)
         idx = t>0
         keep_search_copy = keep_search.data.clone()
         keep_search_copy[keep_search_copy] = idx.byte()
