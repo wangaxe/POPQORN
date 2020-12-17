@@ -311,7 +311,7 @@ def get_d_LB(l,u,func,dfunc):
     keep_search = torch.ones(l.shape, device=device).byte()
     for i in range(max_iter):
         t = diff(d[keep_search], u[keep_search])
-        idx = (t<0) + (t.abs() > 0.01)
+        idx = ((t<0) + (t.abs() > 0.01)).to(torch.float)
         keep_search[keep_search] = (idx > 0)
         if keep_search.sum() == 0:
             break
