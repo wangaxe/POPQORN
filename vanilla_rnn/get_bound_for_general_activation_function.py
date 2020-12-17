@@ -263,20 +263,20 @@ def get_d_UB(l,u,func,dfunc):
     for i in range(max_iter):
         t = diff(d[keep_search], l[keep_search])
         idx = (t<0) + (t.abs() > 0.01)
-        keep_search[keep_search] = (idx > 0)
+        keep_search[keep_search] = (idx > 0).byte()
         if keep_search.sum() == 0:
             break
         t = t[idx>0]
        
         idx = t>0
         keep_search_copy = keep_search.data.clone()
-        keep_search_copy[keep_search_copy] = idx
+        keep_search_copy[keep_search_copy] = idx.byte()
         ub[keep_search_copy] = d[keep_search_copy]
         d[keep_search_copy] = (d[keep_search_copy] + lb[keep_search_copy]) / 2
       
         idx = t<0
         keep_search_copy = keep_search.data.clone()
-        keep_search_copy[keep_search_copy] = idx
+        keep_search_copy[keep_search_copy] = idx.byte()
         lb[keep_search_copy] = d[keep_search_copy]
         d[keep_search_copy] = (d[keep_search_copy] + ub[keep_search_copy]) / 2
         
@@ -311,21 +311,21 @@ def get_d_LB(l,u,func,dfunc):
     keep_search = torch.ones(l.shape, device=device).byte()
     for i in range(max_iter):
         t = diff(d[keep_search], u[keep_search])
-        idx = ((t<0) + (t.abs() > 0.01)).to(torch.float)
-        keep_search[keep_search] = (idx > 0)
+        idx = ((t<0) + (t.abs() > 0.01))
+        keep_search[keep_search] = (idx > 0).byte()
         if keep_search.sum() == 0:
             break
         t = t[idx>0]
-       
+        print(t)
         idx = t>0
         keep_search_copy = keep_search.data.clone()
-        keep_search_copy[keep_search_copy] = idx
+        keep_search_copy[keep_search_copy] = idx.byte()
         lb[keep_search_copy] = d[keep_search_copy]
         d[keep_search_copy] = (d[keep_search_copy] + ub[keep_search_copy]) / 2
-      
+        
         idx = t<0
         keep_search_copy = keep_search.data.clone()
-        keep_search_copy[keep_search_copy] = idx
+        keep_search_copy[keep_search_copy] = idx.byte()
         ub[keep_search_copy] = d[keep_search_copy]
         d[keep_search_copy] = (d[keep_search_copy] + lb[keep_search_copy]) / 2
         

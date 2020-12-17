@@ -20,6 +20,8 @@ from utils.verify_bound import verify_final_output, verifyMaximumEps
 
 import os
 import argparse
+import warnings
+warnings.filterwarnings("ignore")
 
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, time_step, activation):
@@ -484,7 +486,7 @@ class RNN(nn.Module):
                 l_eps[search] = eps[temp]
                 #increase active and true_lower>target_upper units in l_eps 
                 
-                u_eps[search_copy-search] = eps[temp==0]
+                u_eps[search_copy^search] = eps[temp==0]
                 #decrease active and true_lower<target_upper units in u_eps
                 
                 # search = (u_eps - l_eps) > acc #reset active units in search

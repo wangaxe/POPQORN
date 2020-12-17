@@ -22,7 +22,7 @@ def sample_mnist_data(N, seq_len, device, num_labels=10,
         rand_label = torch.randint(num_labels-1,[N],dtype=torch.long, device=device) + 1 
         #range from 1 to num_labels-1
         target_label = torch.fmod(y+rand_label, num_labels)
-        if not rnn is None:
+        if rnn is not None:
             out = rnn(x)
             pred = out.argmax(dim=1)
             idx = (pred == y)
