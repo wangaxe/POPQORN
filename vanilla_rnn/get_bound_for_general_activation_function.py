@@ -110,7 +110,7 @@ def getConvenientGeneralActivationBound(l,u, activation, use_constant=False):
         ku[idx] = 1e-4
         kl[idx] = 1e-4
     
-    valid = (1-idx)
+    valid = ~idx
     
     if valid.sum()>0:
         func = Activation[activation][0]
