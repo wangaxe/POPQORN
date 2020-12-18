@@ -74,17 +74,17 @@ def sigmoid_lower(beta, k,b,y_minus,y_plus, plot=False, num=0):
     k_minus = beta * v_minus * (1-v_minus)
     
     
-    touch_minus = (k<=k_minus) * (1-zero)
+    touch_minus = (k<=k_minus) * (~zero)
     #if loss>0, kx+b is bigger than alpha*tanh(x), we need to lower the loss
     if touch_minus.sum()>0:
         loss[touch_minus] = (k*y_minus + b -  beta*v_minus)[touch_minus]
     
-    touch_plus = (k>=k_plus)* (1-zero)
+    touch_plus = (k>=k_plus)* (~zero)
     #if loss>0, kx+b is bigger than alpha*tanh(x), we need to lower the loss
     if touch_plus.sum()>0:
         loss[touch_plus] = (k*y_plus + b -  beta*v_plus)[touch_plus]
     
-    between = (k>k_minus) * (k<k_plus)* (1-zero)
+    between = (k>k_minus) * (k<k_plus)* (~zero)
     if between.sum()>0:
         y1, y2, k1, k2 = find_sigmoid(beta[between],k[between], eps=1e-3)
         
@@ -160,17 +160,20 @@ def tanh_lower(alpha, k,b,x_minus,x_plus, plot=False, num=0):
     k_minus = alpha * (1-u_minus**2)
     
     
-    touch_minus = (k<=k_minus) * (1-zero)
+    # touch_minus = (k<=k_minus) * (1-zero)
+    touch_minus = (k<=k_minus) * (~zero)
     #if loss>0, kx+b is bigger than alpha*tanh(x), we need to lower the loss
     if touch_minus.sum()>0:
         loss[touch_minus] = (k*x_minus + b -  alpha*u_minus)[touch_minus]
     
-    touch_plus = (k>=k_plus) * (1-zero)
+    # touch_plus = (k>=k_plus) * (1-zero)
+    touch_plus = (k>=k_plus) * (~zero)
     #if loss>0, kx+b is bigger than alpha*tanh(x), we need to lower the loss
     if touch_plus.sum()>0:
         loss[touch_plus] = (k*x_plus + b -  alpha*u_plus)[touch_plus]
     
-    between = (k>k_minus) * (k<k_plus) * (1-zero)
+    # between = (k>k_minus) * (k<k_plus) * (1-zero)
+    between = (k>k_minus) * (k<k_plus) * (~zero)
     if between.sum()>0:
         x1, x2, k1, k2 = find_tanh(alpha[between],k[between], eps=1e-3, positive=False)
         u1 = torch.tanh(x1) * alpha[between]

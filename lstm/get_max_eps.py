@@ -120,7 +120,7 @@ def getUntargetedMaximumEps(lstm, W,b, x, p,true_label, save_dir,
         l_eps[search] = eps[temp]
         #increase active and true_lower>target_upper units in l_eps 
         
-        u_eps[search_copy-search] = eps[temp==0]
+        u_eps[search_copy^search] = eps[temp==0]
         #decrease active and true_lower<target_upper units in u_eps
         
         search = ((u_eps-l_eps) / ((u_eps+l_eps) / 2 + 1e-8)) > acc #reset active units in search

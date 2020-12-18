@@ -56,7 +56,7 @@ def binary_search_upper(x_minus, x_plus, y_minus, y_plus, b0):
                (1-torch.sigmoid(y)))
         idx = (b-b0)>0
         y_lower[idx] = y[idx]
-        idx = 1-idx
+        idx = ~idx
         y_upper[idx] = y[idx]
     
     u_minus = torch.tanh(x_minus)
@@ -108,7 +108,7 @@ def binary_search_y1(x_minus, x_plus, y_minus, y_plus):
         idx = (g>0)
         y_upper[idx] = y1[idx]
         
-        idx = 1-idx
+        idx = ~idx
         y_lower[idx] = y1[idx]
     return (y_upper+y_lower)/2
 
@@ -124,7 +124,7 @@ def binary_search_lower(x_minus, x_plus, y_minus, y_plus, a0):
         a = torch.sigmoid(y_minus) * (1-torch.tanh(x)**2)
         idx = (a-a0)>0
         x_upper[idx] = x[idx]
-        idx = 1-idx
+        idx = ~idx
         x_lower[idx] = x[idx]
     
     v_minus = torch.sigmoid(y_minus)
@@ -207,7 +207,7 @@ def binary_search_x1(x_minus, x_plus, y_minus, y_plus):
         idx = (g<0)
         x_upper[idx] = x1[idx]
         
-        idx = 1-idx
+        idx = ~idx
         x_lower[idx] = x1[idx]
     return (x_upper+x_lower)/2
 

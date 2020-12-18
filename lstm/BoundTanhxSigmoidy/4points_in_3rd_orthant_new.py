@@ -62,7 +62,7 @@ def main_upper(x_minus, x_plus, y_minus, y_plus, a0_is_valid=True, print_info=Tr
     eps = (1e-3) * (y_plus-y_minus)
     idx = (y1>(y_minus+eps)) * (y1<(y_plus-eps)) * (y2>(y_minus+eps)) * (y2<(y_plus-eps))
     
-    idx= 1-idx
+    idx= ~idx
     if idx.sum()>0:
         if print_info:
             print('3u fine tuning the upper plane in the third orthant')
@@ -115,7 +115,8 @@ def main_lower(x_minus, x_plus, y_minus, y_plus, a0_is_valid=True, print_info = 
     eps = (x_plus-x_minus) * 1e-3
     idx = (x1>(x_minus+eps)) * (x1<(x_plus-eps)) * (x2>(x_minus+eps)) * (x2<(x_plus-eps))
     
-    idx = (1-idx)
+    # idx = (1-idx)
+    idx = ~idx
     if idx.sum()>0:
         if print_info:
             print('fine tuning the lower plane in the third orthant')

@@ -160,7 +160,7 @@ def find_initial_feasible_solution(x_minus, x_plus, y_minus, y_plus):
             ka_best[valid] = 0
             kb_best[valid] = 0
         
-        valid = 1-valid
+        valid = ~valid
         if valid.sum()>0:
             ka_temp, kb_temp = binary_search_k(x_minus[valid], x_plus[valid], 
                                              y_minus[valid], y_plus[valid])
